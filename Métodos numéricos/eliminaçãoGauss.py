@@ -1,47 +1,64 @@
+# Importing NumPy Library
 import numpy as np
+import sys
 
-a = np.array([[2.0,-1.0,0.0,1.0], #linha 0
-             [-1.0,2.0,-1.0,0.0], #linha 1
-             [0.0,-1.0,2.0,0.0]]) #linha 2
-
-b = np.array([1,0,0])
-
-n = np.size(b) #tamanho da matriz b
-
-print("Eliminação das linhas:")
-for k in range(n-1):
-    for i in range(k+1,n):
-        m = a[i,k]/a[k,k] #pivô(k,k) multiplicador
-        a[i,:] = a[i,:] - m* a[k,:] #linha 1 recebe linha 1 - multiplicador x a linha 0
-        b[i] = b[i]- m* b[i]
-        print(a)
-        print(" ")
+# Reading number of unknowns
+print("A matriz começa com [0][0], ou seja, vai de 0 até a quantidade de elementos da linha -1")
+print("Digitar linha por linha")
+print()
+print("------------------------------------------------------")
+n = int(input('Número do tamanho da matriz: '))
+print("------------------------------------------------------")
+print()
 
 
-def MetodoGauss(m):
-    #eliminação de colunas
-    for col in range(len(m[0])):
-        for row in range(col+1, len(m)):
-            r = [(rowValue * (-(m[row][col] / m[col][col]))) for rowValue in m[col]]
-            m[row] = [sum(pair) for pair in zip(m[row], r)]
-    #Resolver por substituição
-    ans = []
-    m.reverse() 
-    for sol in range(len(m)):
-            if sol == 0:
-                ans.append(m[sol][-1] / m[sol][-2])
-            else:
-                inner = 0
-                #Substituir em todos os coeficientes conhecidos
-                for x in range(sol):
-                    inner += (ans[x]*m[sol][-2-x])
-                #A equação está agora reduzida a ax + b = c
-                #Resolve-se com (c - b) / a
-                ans.append((m[sol][-1]-inner)/m[sol][-sol-2])
-    ans.reverse()
-    return ans
+# Making numpy array of n x n+1 size and initializing 
+# to zero for storing augmented matrix
+a = np.zeros((n,n+1))
 
-print("Solução do sistema: ")  
-print(MetodoGauss([[2.0,-1.0,0.0,1.0],
-               [-1.0,2.0,-1.0,0.0],
-               [0.0,-1.0,2.0,0.0,]]))
+# Making numpy array of n size and initializing 
+# to zero for storing solution vector
+x = np.zeros(n)
+
+# Reading augmented matrix coefficients
+
+print('Coeficientes da matriz aumentada:')
+for i in range(n):
+    for j in range(n+1):
+        a[i][j] = float(input( 'a['+str(i)+']['+ str(j)+']='))
+
+# Applying Gauss Elimination
+for i in range(n):
+    if a[i][i] == 0.0:
+        sys.exit('Divisão por zero detectada!')
+        
+    for j in range(i+1, n):
+        ratio = a[j][i]/a[i][i]
+        
+        for k in range(n+1):
+            a[j][k] = a[j][k] - ratio * a[i][k]
+    
+    print()
+    print("Eliminação de Gauss: ", i+1)
+    print()
+    print(a)
+
+# Back Substitution
+x[n-1] = a[n-1][n]/a[n-1][n-1]
+
+for i in range(n-2,-1,-1):
+    x[i] = a[i][n]
+    
+    for j in range(i+1,n):
+        x[i] = x[i] - a[i][j]*x[j]
+    
+    x[i] = x[i]/a[i][i]
+
+print("\n")
+print("Matriz Escalonada: \n")
+print(a)
+
+# Displaying solution
+print('\nSolução do sistema: ')
+for i in range(n):
+    print('X%d = %0.2f' %(i,x[i]), end = '\t')

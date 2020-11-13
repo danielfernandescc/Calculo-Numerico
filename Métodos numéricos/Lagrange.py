@@ -1,0 +1,53 @@
+# Lagrange Interpolation
+
+# Importing NumPy Library
+import numpy as np
+
+# Reading number of unknowns
+n = int(input('Digite a quantidade de nós: '))
+
+# Making numpy array of n & n x n size and initializing 
+# to zero for storing x and y value along with differences of y
+x = np.zeros((n))
+y = np.zeros((n))
+
+# Reading data points
+print('Digite os valores de x e f(x): ')
+print("Y = f(x)")
+print()
+for i in range(n):
+    x[i] = float(input( 'x['+str(i)+']= '))
+    y[i] = float(input( 'y['+str(i)+']= '))
+
+fim = ""
+print()
+
+# Implementing Lagrange Interpolation
+for i in range(n):
+    num = ""
+    den = 1
+    res = ""
+    
+    #p = 1
+    
+    for j in range(n):
+        if i != j:
+            if(x[j] != 0):
+                num += "(x - " + str(abs(x[j])) + ")"
+                den *= x[i] - x[j]
+            else:
+                num += "x"
+                den *= x[i]
+    denom = '%.3f'%den
+
+    res += num + "/" + denom
+    if(i!=n-1):
+        fim += str(y[i]) + res + " + "
+    else:
+        fim += str(y[i]) + res
+    print("L"+str(i)+"(x) =",res)
+    print()
+
+# Displaying output
+print("P2(x) =", fim)
+print()
