@@ -49,5 +49,22 @@ for i in range(n):
     print()
 
 # Displaying output
-print("P2(x) =", fim)
+print("P%d(x) ="%i, fim)
+print()
+
+ent = float(input("Resolver o polinômio para um valor de x = "))
+
+res = 0
+for i in range(n):
+    num = 1
+    den = 1
+    
+    for j in range(n):
+        if i != j:
+            num *= (ent - x[j])
+            den *= (x[i] - x[j])
+
+    res += y[i]*(num/den)
+    
+print("P%d(%.2f) = %.3f"%(i,ent,res))
 print()

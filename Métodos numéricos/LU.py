@@ -1,6 +1,6 @@
 MAX = 100;
  
-def luDecomposition(mat, n):
+def luDecomposition(mat, b, n):
  
     lower = [[0 for x in range(n)] 
                 for y in range(n)];
@@ -26,9 +26,9 @@ def luDecomposition(mat, n):
             upper[i][k] = mat[i][k] - sum;
         
         if(i!=0):
-            print("Passo", i, "- Matriz L")
-            for c in range(3):
-                for s in range(3):
+            print("Passo", i, "- Matriz M: ", i - 1)
+            for c in range(n):
+                for s in range(n):
                     print("{:.3f}".format(lower[c][s]), end = "\t")
                 print()
             print()
@@ -49,7 +49,7 @@ def luDecomposition(mat, n):
         print()
  
     # setw is for displaying nicely
-    print("Tringular Inferior - L \t\t\t Triangular Superior - U");
+    print("Tringular Inferior - L \t\t\t\t\t Triangular Superior - U");
     # Displaying the result :
     for i in range(n):
         # Lower
@@ -61,11 +61,46 @@ def luDecomposition(mat, n):
             print("{:.3f}".format(upper[i][j]), end = "\t")
         print("", end = "");
         print()
+
+    y = [0 for i in range(n)]
+    y[0] = b[0]/lower[0][0]
+    #y[1] = (-y[0]*lower[1][0]+b[1])/lower[1][1]
+    #y[2] = (-y[0]*lower[2][0]-y[1]*lower[2][1]+b[2])/lower[2][2]
+    #y[3] = (-y[0]*lower[3][0]-y[1]*lower[3][1]-y[2]*lower[3][2]+b[3])/lower[3][3]
+    
+    print("\nValores matriz Ly = b")
+    print("y0 =", y[0])
+    for j in range(1, n):
+        num = 0
+        for k in range(0,j):
+            num-=lower[j][k]*y[k]
+        num+=b[j]
+        y[j] = num/lower[j][j]
+        print("y%d ="%j, y[j])
+    
+    x = [0 for i in range(n)]
+    x[n-1] = y[n-1]/upper[n-1][n-1]
+    #x[n-2] = (-x[n-1]*upper[n-2][n-1]+y[n-2])/upper[n-2][n-2]
+    #x[n-3] = (-x[n-1]*upper[n-3][n-1]-x[n-2]*upper[n-3][n-2]+y[n-3])/upper[n-3][n-3]
+    #x[n-4] = (-x[n-1]*upper[n-4][n-1]-x[n-2]*upper[n-4][n-2]-x[n-3]*upper[n-4][n-3]+y[n-4])/upper[n-4][n-4]
+
+    for i in range(n-2, -1, -1):
+        num = 0
+        for j in range(n-1, i, -1):
+            num-=x[j]*upper[i][j]
+        num+=y[i]
+        x[i] = num/upper[i][i]
+    
+    print("\nValores matriz Ux = y")
+    for i in range(n):
+        print("x%d ="%i, x[i])
+ 
 # Driver code
-mat = [[3, 2, 4],
-       [1, 1, 2],
-       [4, 3, 2]];
+mat = [[1, 1, 2, 1],
+       [2, 0, 1, 1],
+       [1, -1, 0, 0],
+       [1, 2, 2, -1]];
 
-b = [1, 2, 3]
+b = [0, 1, -1, 2]
 
-luDecomposition(mat, 3);
+luDecomposition(mat, b, 4);

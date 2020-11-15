@@ -7,9 +7,9 @@ f2 = lambda x,y,z: (6-3*x-z)/4
 f3 = lambda x,y,z: (-3*x-3*y)/6
 
 # Initial setup
-x0 = 0
-y0 = 0
-z0 = 0
+x0 = 1
+y0 = 1
+z0 = 1
 count = 1
 
 # Reading tolerable error

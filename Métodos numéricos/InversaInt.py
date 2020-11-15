@@ -57,6 +57,19 @@ for i in range(n):
             else: print("(y)", end= "")
 
 print("\n")
+ent = float(input("Resolver para y = "))
+soma = 0
+print()
+for i in range(n):
+    px = matriz[i][i]
+
+    for j in range(i):
+        px *= (ent - y[j])
+    
+    soma += px
+print("Resultado: %.7f"%soma);
+print()
+
 erro = float(input("Calculo do Erro: "))
 ordem = int(input("Ordem: "))
 ap = int(input("A partir de qual linha? "))
@@ -73,16 +86,3 @@ for i in range(ordem+1, n):
 
 res = maior*dd
 print("\nErro: %.7f * %.7f = %.7f"%(maior, dd, res))
-
-print()
-ent = float(input("Resolver para y = "))
-soma = 0
-print()
-for i in range(n):
-    px = matriz[i][i]
-
-    for j in range(i):
-        px *= (ent - y[j])
-    
-    soma += px
-print("Resultado: %.7f"%soma);
