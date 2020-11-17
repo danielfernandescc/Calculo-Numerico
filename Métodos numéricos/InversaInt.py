@@ -1,7 +1,10 @@
 import numpy as np
 
 # Reading number of unknowns
-n = int(input('Digite o número de nós: '))
+print("---------------------------------------")
+n = int(input('Digite a quantidade de nós: '))
+print("---------------------------------------")
+print()
 
 # Making numpy array of n & n x n size and initializing 
 # to zero for storing x and y value along with differences of y
@@ -10,9 +13,7 @@ y = np.zeros((n))
 matriz = [[" " for i in range(n)] for j in range(n)]
 
 # Reading data points
-print('Digite os valores de x e f(x): ')
-print("Y = f(x)")
-print()
+print('Digite os valores de x e f(x), sabendo que y = f(x): ')
 for i in range(n):
     x[i] = float(input( 'x['+str(i)+']= '))
     y[i] = float(input( 'y['+str(i)+']= '))
@@ -25,7 +26,10 @@ for i in range(1, n):
         matriz[j][i] = (matriz[j][i-1] - matriz[j-1][i-1])/(y[j] - y[k])
         k += 1
 
-print("Ordem 0\tOrdem 1\tOrdem 2\tOrdem 3\tOrdem 4\t")
+for i in range(n):
+    print("Ordem %d"%i, end='\t')
+print()
+
 for i in range(n):
     for j in range(n):
         if(matriz[i][j] != " "): print("%.4f"%matriz[i][j], end="\t")
@@ -57,6 +61,7 @@ for i in range(n):
             else: print("(y)", end= "")
 
 print("\n")
+
 ent = float(input("Resolver para y = "))
 soma = 0
 print()

@@ -9,6 +9,8 @@ def Cholesky_Decomposition(matrix, n):
     lower = [[0 for x in range(n + 1)]
                 for y in range(n + 1)]; 
 
+    print("FATORAÇÃO DE CHOLESKY")
+    print()
     # Decomposing a matrix 
     # into Lower Triangular 
     for i in range(n):
@@ -58,10 +60,10 @@ def Cholesky_Decomposition(matrix, n):
 
 # Driver Code 
 n = 3; 
-matrix = [[1, 1, 0],
-          [1, 2, -1],
-          [0, -1, 3]];
+matrix = [[1, 9, 9],
+       [9, 150, 7],
+       [9, 7, 1000]];
 
-b = [2, 1, 5]
+b = [2, -1, 3]
 
 Cholesky_Decomposition(matrix, n); 

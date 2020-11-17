@@ -3,9 +3,12 @@ import numpy as np
 import sys
 
 # Reading number of unknowns
-print("--------------------------------------")
+print("ELIMINAÇÃO DE GAUSS")
+print()
+print("-------------------------")
 n = int(input('Tamanho matriz: '))
-print("--------------------------------------")
+print("-------------------------")
+print()
 
 # Making numpy array of n x n+1 size and initializing 
 # to zero for storing augmented matrix
@@ -17,7 +20,6 @@ x = np.zeros(n)
 
 # Reading augmented matrix coefficients
 print('Coeficientes (matriz aumentada):')
-print()
 for i in range(n):
     for j in range(n+1):
         a[i][j] = float(input( 'a['+str(i)+']['+ str(j)+']= '))
@@ -33,12 +35,12 @@ for i in range(n):
         for k in range(n+1):
             a[j][k] = a[j][k] - ratio * a[i][k]
     print()
-    if(i==n-1): print("Matriz estendida final")
+    if(i==n-1): print("Matriz escalonada estendida final:")
     for k in range(n):
         for l in range(n+1):
             if(l==n): print("|", end=' ')
             if(int(a[k][l])==a[k][l]): print(int(a[k][l]), end='\t')
-            else: print(a[k][l], end='\t')
+            else: print("{:.3f}".format(a[k][l]), end='\t')
         print()
 
 # Back Substitution
@@ -55,4 +57,4 @@ for i in range(n-2,-1,-1):
 # Displaying solution
 print('\nSolução: ')
 for i in range(n):
-    print('X%d = %0.2f' %(i,x[i]), end = '\t')
+    print('X%d = %0.3f' %(i,x[i]), end = '\t')
